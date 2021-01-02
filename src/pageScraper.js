@@ -23,24 +23,42 @@ const scraperObject = {
             (text) => text.textContent,
           );
 
+          let category = "";
+
+          try {
+            category = await newPage.$eval(
+              "div.sub span.taste span.text",
+              (text) => text.textContent.replace(/-\s/g, ""),
+            );
+          } catch (error) {
+            category = "n/a";
+          }
+
           const productId = await newPage.$eval(
             "h3 > span.product-info-text.product-number-text",
             (text) => text.textContent.replace(/[()]/g, ""),
           );
 
-          const price = await newPage.$eval(
-            "div.price > span.money",
-            (text) => text.textContent,
+          const price = parseInt(
+            await newPage.$eval(
+              "div.price > span.money",
+              (text) => text.textContent,
+            ),
+            10,
           );
 
-          const pricePerLiter = await newPage.$eval(
-            "div.price > span.price-per-liter",
-            (text) => text.textContent.replace(/[^0-9.]/g, ""),
+          const pricePerLiter = parseInt(
+            await newPage.$eval("div.price > span.price-per-liter", (text) =>
+              text.textContent.replace(/[^0-9.]/g, ""),
+            ),
+            10,
           );
 
-          const alcoholByVolume = await newPage.$eval(
-            "span#ctl01_ctl01_Label_ProductAlchoholVolume",
-            (text) => text.textContent,
+          const alcoholByVolume = parseFloat(
+            await newPage.$eval(
+              "span#ctl01_ctl01_Label_ProductAlchoholVolume",
+              (text) => text.textContent.replace(/,/g, "."),
+            ),
           );
 
           const countryOfOrigin = await newPage.$eval(
@@ -77,18 +95,17 @@ const scraperObject = {
           let imageUrl = "";
 
           try {
-            const url = await newPage.$eval(
+            imageUrl = await newPage.$eval(
               "div.slick-slide.slick-current.slick-active div div a",
               (el) => el.href,
             );
-
-            imageUrl = url;
           } catch (error) {
             imageUrl = "n/a";
           }
 
           resolve({
             title,
+            category,
             productId,
             price,
             pricePerLiter,
@@ -99,6 +116,7 @@ const scraperObject = {
             packaging,
             volume,
             imageUrl,
+            url,
           });
 
           await newPage.close();
