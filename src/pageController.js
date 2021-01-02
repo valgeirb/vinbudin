@@ -8,7 +8,7 @@ async function scrapeAll(browserInstance) {
     const baseUrlBeers =
       "https://www.vinbudin.is/english/home/products/vorur.aspx/?category=beer";
 
-    const allBeers = await pageScraper.scraper(browser, baseUrlBeers);
+    const beers = await pageScraper.scraper(browser, baseUrlBeers);
 
     /* const christmasBeers = await pageScraper.scraper(
       browser,
@@ -33,7 +33,7 @@ async function scrapeAll(browserInstance) {
     await browser.close();
 
     let scrapedData = {
-      allBeers,
+      beers,
     };
 
     fs.writeFile("data.json", JSON.stringify(scrapedData), "utf8", (err) => {
