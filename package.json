@@ -1,8 +1,8 @@
 {
   "name": "vinbudin",
   "version": "0.1.0",
-  "description": "An API for www.vinbudin.is",
-  "main": "index.js",
+  "description": "A scraper for www.vinbudin.is",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/index.js"
@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "listr": "^0.14.3",
     "puppeteer": "^5.5.0"
   },
   "devDependencies": {

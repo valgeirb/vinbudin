@@ -1,11 +1,11 @@
-const scraperObject = {
+const pageScraper = {
   async scraper(browser, startingUrl) {
     let page = await browser.newPage();
     await page.goto(startingUrl);
     let scrapedData = [];
 
     const scrapeCurrentPage = async () => {
-      console.log(`Navigating to ${await page.url()}`);
+      // console.log(`Navigating to ${await page.url()}`);
       await page.waitForSelector(".inner");
       let productLinks = await page.$$eval("ul > li.product", (links) => {
         links = links.map((el) => el.querySelector("li > a").href);
@@ -23,15 +23,36 @@ const scraperObject = {
             (text) => text.textContent,
           );
 
-          let category = "";
+          let style = "";
 
           try {
-            category = await newPage.$eval(
+            style = await newPage.$eval(
               "div.sub span.taste span.text",
-              (text) => text.textContent.replace(/-\s/g, ""),
+              (text) =>
+                text.textContent
+                  .replace(/-\s/g, "")
+                  .replace(/\s/g, "_")
+                  .toUpperCase(),
             );
           } catch (error) {
-            category = "n/a";
+            style = "n/a";
+          }
+
+          let type = "";
+
+          try {
+            type = await newPage.$eval(
+              "div.sub span.taste span.text.taste2",
+              (text) =>
+                text.textContent
+                  .replace(/-\s/g, "")
+                  .replace(/,/g, "")
+                  .replace(/\s/g, "_")
+                  .replace(/_\/_/g, "/")
+                  .toUpperCase(),
+            );
+          } catch (error) {
+            type = "n/a";
           }
 
           const productId = await newPage.$eval(
@@ -40,9 +61,8 @@ const scraperObject = {
           );
 
           const price = parseInt(
-            await newPage.$eval(
-              "div.price > span.money",
-              (text) => text.textContent,
+            await newPage.$eval("div.price > span.money", (text) =>
+              text.textContent.replace(/[^0-9.]/g, ""),
             ),
             10,
           );
@@ -87,10 +107,8 @@ const scraperObject = {
             packaging = "n/a";
           }
 
-          const volume = await newPage.$eval(
-            "span#ctl01_ctl01_Label_ProductBottledVolume",
-            (text) => text.textContent,
-          );
+          const volumeInLiters =
+            Math.round((price / pricePerLiter) * 100) / 100;
 
           let imageUrl = "";
 
@@ -103,9 +121,12 @@ const scraperObject = {
             imageUrl = "n/a";
           }
 
+          const season = "ANY";
+
           resolve({
             title,
-            category,
+            style,
+            type,
             productId,
             price,
             pricePerLiter,
@@ -114,9 +135,10 @@ const scraperObject = {
             producer,
             supplier,
             packaging,
-            volume,
+            volumeInLiters,
             imageUrl,
             url,
+            season,
           });
 
           await newPage.close();
@@ -148,4 +170,4 @@ const scraperObject = {
   },
 };
 
-module.exports = scraperObject;
+module.exports = pageScraper;
