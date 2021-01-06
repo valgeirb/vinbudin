@@ -1,16 +1,22 @@
-// const fs = require("fs");
 const pageScraper = require("./pageScraper");
-async function scrapeAll(browserInstance) {
+
+async function beers(browserInstance) {
   let browser;
   try {
     browser = await browserInstance;
 
-    /* const baseUrlBeers =
+    const baseUrlBeers =
       "https://www.vinbudin.is/english/home/products/vorur.aspx/?category=beer";
 
-    const beers = await pageScraper.scraper(browser, baseUrlBeers);
+    let allBeers = [];
+    let christmasBeers = [];
+    let octoberBeers = [];
+    let easterBeers = [];
+    let thorriBeers = [];
 
-    const christmasBeers = await pageScraper
+    allBeers = await pageScraper.scraper(browser, baseUrlBeers);
+
+    christmasBeers = await pageScraper
       .scraper(browser, `${baseUrlBeers}&season=J%C3%93L`)
       .then((beers) =>
         beers.map((beer) => ({
@@ -19,7 +25,7 @@ async function scrapeAll(browserInstance) {
         })),
       );
 
-    const octoberBeers = await pageScraper
+    octoberBeers = await pageScraper
       .scraper(browser, `${baseUrlBeers}&season=OKT%C3%93BER`)
       .then((beers) =>
         beers.map((beer) => ({
@@ -28,7 +34,7 @@ async function scrapeAll(browserInstance) {
         })),
       );
 
-    const easterBeers = await pageScraper
+    easterBeers = await pageScraper
       .scraper(browser, `${baseUrlBeers}&season=P%C3%81SKAR`)
       .then((beers) =>
         beers.map((beer) => ({
@@ -37,31 +43,39 @@ async function scrapeAll(browserInstance) {
         })),
       );
 
-    const thorriBeers = await pageScraper
+    thorriBeers = await pageScraper
       .scraper(browser, `${baseUrlBeers}&season=%C3%9EORRI`)
       .then((beers) =>
         beers.map((beer) => ({
           ...beer,
           season: "THORRI",
         })),
-      ); */
+      );
 
-    await browser.close();
+    const seasonalBeers = [
+      ...christmasBeers,
+      ...octoberBeers,
+      ...easterBeers,
+      ...thorriBeers,
+    ];
 
-    /* let scrapedData = {
-      beers: christmasBeers,
-    };
+    const beers = allBeers.map((beer) => {
+      const beerDuplicate = seasonalBeers.find(
+        (seasonalBeer) => seasonalBeer.productId === beer.productId,
+      );
 
-    fs.writeFile("data.json", JSON.stringify(scrapedData), "utf8", (err) => {
-      if (err) {
-        return console.log(err);
-      }
+      return beerDuplicate
+        ? {
+            ...beer,
+            season: beerDuplicate.season,
+          }
+        : beer;
+    });
 
-      console.log("Scrape complete, see './data.json'");
-    }); */
+    return beers;
   } catch (err) {
     console.log("Could not resolve the browser instance => ", err);
   }
 }
 
-module.exports = (browserInstance) => scrapeAll(browserInstance);
+module.exports = (browserInstance) => beers(browserInstance);

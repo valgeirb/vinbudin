@@ -18,10 +18,16 @@ const pageScraper = {
           let newPage = await browser.newPage();
           await newPage.goto(url);
 
-          const title = await newPage.$eval(
-            "h3 > span.product-info-text",
-            (text) => text.textContent,
-          );
+          let title = "";
+
+          try {
+            title = await newPage.$eval(
+              "h3 > span.product-info-text",
+              (text) => text.textContent,
+            );
+          } catch (error) {
+            title = "n/a";
+          }
 
           let style = "";
 
@@ -55,46 +61,88 @@ const pageScraper = {
             type = "n/a";
           }
 
-          const productId = await newPage.$eval(
-            "h3 > span.product-info-text.product-number-text",
-            (text) => text.textContent.replace(/[()]/g, ""),
-          );
+          let productId = "";
 
-          const price = parseInt(
-            await newPage.$eval("div.price > span.money", (text) =>
-              text.textContent.replace(/[^0-9.]/g, ""),
-            ),
-            10,
-          );
+          try {
+            productId = await newPage.$eval(
+              "h3 > span.product-info-text.product-number-text",
+              (text) => text.textContent.replace(/[()]/g, ""),
+            );
+          } catch (error) {
+            productId = "n/a";
+          }
 
-          const pricePerLiter = parseInt(
-            await newPage.$eval("div.price > span.price-per-liter", (text) =>
-              text.textContent.replace(/[^0-9.]/g, ""),
-            ),
-            10,
-          );
+          let price = "";
 
-          const alcoholByVolume = parseFloat(
-            await newPage.$eval(
-              "span#ctl01_ctl01_Label_ProductAlchoholVolume",
-              (text) => text.textContent.replace(/,/g, "."),
-            ),
-          );
+          try {
+            price = parseInt(
+              await newPage.$eval("div.price > span.money", (text) =>
+                text.textContent.replace(/[^0-9.]/g, ""),
+              ),
+              10,
+            );
+          } catch (error) {
+            price = "n/a";
+          }
 
-          const countryOfOrigin = await newPage.$eval(
-            "span#ctl01_ctl01_Label_ProductCountryOfOrigin",
-            (text) => text.textContent,
-          );
+          let pricePerLiter = "";
 
-          const producer = await newPage.$eval(
-            "span#ctl01_ctl01_Label_Producer",
-            (text) => text.textContent,
-          );
+          try {
+            pricePerLiter = parseInt(
+              await newPage.$eval("div.price > span.price-per-liter", (text) =>
+                text.textContent.replace(/[^0-9.]/g, ""),
+              ),
+              10,
+            );
+          } catch (error) {
+            pricePerLiter = "n/a";
+          }
 
-          const supplier = await newPage.$eval(
-            "span#ctl01_ctl01_Label_ProductSeller",
-            (text) => text.textContent,
-          );
+          let alcoholByVolume = "";
+
+          try {
+            alcoholByVolume = parseFloat(
+              await newPage.$eval(
+                "span#ctl01_ctl01_Label_ProductAlchoholVolume",
+                (text) => text.textContent.replace(/,/g, "."),
+              ),
+            );
+          } catch (error) {
+            alcoholByVolume = "n/a";
+          }
+
+          let countryOfOrigin = "";
+
+          try {
+            countryOfOrigin = await newPage.$eval(
+              "span#ctl01_ctl01_Label_ProductCountryOfOrigin",
+              (text) => text.textContent,
+            );
+          } catch (error) {
+            countryOfOrigin = "n/a";
+          }
+
+          let producer = "";
+
+          try {
+            producer = await newPage.$eval(
+              "span#ctl01_ctl01_Label_Producer",
+              (text) => text.textContent,
+            );
+          } catch (error) {
+            producer = "n/a";
+          }
+
+          let supplier = "";
+
+          try {
+            supplier = await newPage.$eval(
+              "span#ctl01_ctl01_Label_ProductSeller",
+              (text) => text.textContent,
+            );
+          } catch (error) {
+            supplier = "n/a";
+          }
 
           let packaging = "";
 
@@ -154,7 +202,7 @@ const pageScraper = {
 
       if (!isDisabled) {
         await page.click("ul.pagination li:last-child");
-        await page.waitForSelector(".loader", { visible: true });
+        await page.waitForTimeout(500);
         await page.waitForSelector(".loader", { visible: false });
 
         return scrapeCurrentPage();
