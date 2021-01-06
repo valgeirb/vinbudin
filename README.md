@@ -1,4 +1,4 @@
-# vinbudin
+# vinbudin-scraper
 
 > A scraper for www.vinbudin.is
 
