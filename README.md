@@ -21,7 +21,7 @@ Install from npm and save to your `package.json`:
 ### Basic
 
 ```javascript
-const vinbudin = require("vinbudin");
+const vinbudin = require("vinbudin-scraper");
 
 vinbudin.scrape().then((scrapedData) => {
   // Handle the scraped data
@@ -51,7 +51,7 @@ vinbudin
 ### Saving results to a local file
 
 ```javascript
-const vinbudin = require("vinbudin");
+const vinbudin = require("vinbudin-scraper");
 const fs = require("fs");
 
 async function vinbudinExample() {
