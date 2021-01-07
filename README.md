@@ -31,16 +31,14 @@ vinbudin.scrape().then((scrapedData) => {
 // You can also provide an options object to get specific data
 vinbudin
   .scrape({
-    products: {
-      beer: true,
-      redWine: true,
-      whiteWine: true,
-      roseWine: true,
-      sparklingWine: true,
-      dessertWine: true,
-      ciderAndSoda: true,
-      spirit: true,
-    },
+    beer: true,
+    redWine: true,
+    whiteWine: true,
+    roseWine: true,
+    sparklingWine: true,
+    dessertWine: true,
+    ciderAndSoda: true,
+    spirit: true,
   })
   .then((scrapedData) => {
     // Handle the scraped data
