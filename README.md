@@ -14,7 +14,7 @@ This package extracts data from every product page on www.vinbudin.is and return
 
 Install from npm and save to your `package.json`:
 
-    npm install vinbudin --save
+    npm install vinbudin-scraper --save
 
 ## Examples
 
