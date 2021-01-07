@@ -10,16 +10,14 @@ function time(ms) {
 module.exports = {
   scrape: async function (
     options = {
-      products: {
-        beer: true,
-        redWine: true,
-        whiteWine: true,
-        roseWine: true,
-        sparklingWine: true,
-        dessertWine: true,
-        ciderAndSoda: true,
-        spirit: true,
-      },
+      beer: true,
+      redWine: true,
+      whiteWine: true,
+      roseWine: true,
+      sparklingWine: true,
+      dessertWine: true,
+      ciderAndSoda: true,
+      spirit: true,
     },
   ) {
     const startTime = Date.now();
@@ -35,7 +33,7 @@ module.exports = {
                 title: "Beer",
                 task: async () =>
                   (data["beer"] = await categories["beer"](browserInstance)),
-                skip: () => !options.products["beer"],
+                skip: () => !options["beer"],
               },
               {
                 title: "Red wine",
@@ -43,7 +41,7 @@ module.exports = {
                   (data["redWine"] = await categories["redWine"](
                     browserInstance,
                   )),
-                skip: () => !options.products["redWine"],
+                skip: () => !options["redWine"],
               },
               {
                 title: "White wine",
@@ -51,7 +49,7 @@ module.exports = {
                   (data["whiteWine"] = await categories["whiteWine"](
                     browserInstance,
                   )),
-                skip: () => !options.products["whiteWine"],
+                skip: () => !options["whiteWine"],
               },
               {
                 title: "Rose wine",
@@ -59,7 +57,7 @@ module.exports = {
                   (data["roseWine"] = await categories["roseWine"](
                     browserInstance,
                   )),
-                skip: () => !options.products["roseWine"],
+                skip: () => !options["roseWine"],
               },
               {
                 title: "Sparkling wine",
@@ -67,7 +65,7 @@ module.exports = {
                   (data["sparklingWine"] = await categories["sparklingWine"](
                     browserInstance,
                   )),
-                skip: () => !options.products["sparklingWine"],
+                skip: () => !options["sparklingWine"],
               },
               {
                 title: "Dessert wine",
@@ -75,7 +73,7 @@ module.exports = {
                   (data["dessertWine"] = await categories["dessertWine"](
                     browserInstance,
                   )),
-                skip: () => !options.products["dessertWine"],
+                skip: () => !options["dessertWine"],
               },
               {
                 title: "Cider and soda",
@@ -83,7 +81,7 @@ module.exports = {
                   (data["ciderAndSoda"] = await categories["ciderAndSoda"](
                     browserInstance,
                   )),
-                skip: () => !options.products["ciderAndSoda"],
+                skip: () => !options["ciderAndSoda"],
               },
               {
                 title: "Spirits",
@@ -91,7 +89,7 @@ module.exports = {
                   (data["spirit"] = await categories["spirit"](
                     browserInstance,
                   )),
-                skip: () => !options.products["spirit"],
+                skip: () => !options["spirit"],
               },
             ],
             {
