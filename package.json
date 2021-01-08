@@ -19,7 +19,7 @@
     "email": "valgeir@hey.com",
     "url": "https://github.com/valgeirb"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "inquirer": "^7.3.3",
     "listr": "^0.14.3",
