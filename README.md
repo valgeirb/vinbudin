@@ -10,6 +10,18 @@ Vínbúðin does not provide an open API. This package can be used to analyse th
 
 This package extracts data from every product page on www.vinbudin.is and returns a JSON Object.
 
+## CLI
+
+The quickest way to try this package out is using the CLI:
+
+```
+npx vinbudin-scraper
+```
+
+This will allow you to select what you want to scrape. The scraped data will be saved as a `products.json` file in the same folder that you ran the scraper.
+
+Try selecting `Cider and soda` as that should not take much more than 2 minutes to complete.
+
 ## Usage
 
 Install from npm and save to your `package.json`:

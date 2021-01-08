@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+
+const fs = require("fs");
 var inquirer = require("inquirer");
 var { scrape } = require("./index");
 
@@ -30,7 +33,19 @@ async function promptForOptions() {
   return options;
 }
 
-export async function cli() {
+(async function cli() {
   const options = await promptForOptions();
-  await scrape(options);
-}
+  const products = await scrape(options);
+
+  let scrapedData = {
+    products,
+  };
+
+  fs.writeFile("products.json", JSON.stringify(scrapedData), "utf8", (err) => {
+    if (err) {
+      return console.log(err);
+    }
+
+    console.log("Scrape complete, see './products.json'");
+  });
+})();

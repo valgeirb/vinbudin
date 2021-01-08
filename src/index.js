@@ -22,6 +22,7 @@ module.exports = {
   ) {
     const startTime = Date.now();
     let data = {};
+    let browser = await browserInstance;
 
     const tasks = new Listr([
       {
@@ -103,6 +104,8 @@ module.exports = {
     await tasks.run().catch((err) => {
       console.error("Tasks", err);
     });
+
+    browser.close();
 
     const endTime = Date.now();
     console.log("Time it took to scrape:", time(endTime - startTime));

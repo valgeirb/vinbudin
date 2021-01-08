@@ -2,23 +2,25 @@
   "name": "vinbudin-scraper",
   "version": "0.3.0",
   "bin": {
-    "scrape": "bin/scrape"
+    "vinbudin-scraper": "src/cli.js"
   },
   "description": "A scraper for www.vinbudin.is",
   "homepage": "https://github.com/valgeirb/vinbudin-scraper",
   "main": "src/index.js",
   "files": [
-    "bin/",
     "src/"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/index.js"
   },
-  "author": "Valgeir Björnsson",
+  "author": {
+    "name": "Valgeir Björnsson",
+    "email": "valgeir@hey.com",
+    "url": "https://github.com/valgeirb"
+  },
   "license": "ISC",
   "dependencies": {
-    "esm": "^3.2.25",
     "inquirer": "^7.3.3",
     "listr": "^0.14.3",
     "puppeteer": "^5.5.0"
