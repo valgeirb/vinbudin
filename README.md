@@ -1,4 +1,4 @@
-<img width="75px" height="75px" align="right" alt="Inquirer Logo" src="https://raw.githubusercontent.com/valgeirb/vinbudin/main/assets/vinbudin.svg?sanitize=true" title="vinbudin"/>
+<img width="75px" height="75px" align="right" alt="Vinbudin Logo" src="https://raw.githubusercontent.com/valgeirb/vinbudin/main/assets/vinbudin.svg?sanitize=true" title="vinbudin"/>
 
 # vinbudin
 
