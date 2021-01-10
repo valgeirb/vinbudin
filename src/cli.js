@@ -2,23 +2,23 @@
 
 const fs = require("fs");
 var inquirer = require("inquirer");
-var { scrape } = require("./index");
+var { get } = require("./index");
 
 async function promptForOptions() {
   const answers = await inquirer.prompt([
     {
       type: "checkbox",
       name: "products",
-      message: "Pick what you want to scrape",
+      message: "Pick what you want to fetch",
       choices: [
-        { name: "Beer", value: "beer" },
-        { name: "Red wine", value: "redWine" },
-        { name: "White wine", value: "whiteWine" },
-        { name: "Rose wine", value: "roseWine" },
-        { name: "Sparkling wine", value: "sparklingWine" },
-        { name: "Dessert wine", value: "dessertWine" },
-        { name: "Cider and soda", value: "ciderAndSoda" },
-        { name: "Spirits", value: "spirit" },
+        { name: "Beers", value: "beers" },
+        { name: "Red wines", value: "redWines" },
+        { name: "White wines", value: "whiteWines" },
+        { name: "Rose wines", value: "roseWines" },
+        { name: "Sparkling wines", value: "sparklingWines" },
+        { name: "Dessert wines", value: "dessertWines" },
+        { name: "Ciders and sodas", value: "cidersAndSodas" },
+        { name: "Spirits", value: "spirits" },
       ],
       loop: false,
     },
@@ -35,13 +35,9 @@ async function promptForOptions() {
 
 (async function cli() {
   const options = await promptForOptions();
-  const products = await scrape(options);
+  const products = await get(options);
 
-  let scrapedData = {
-    products,
-  };
-
-  fs.writeFile("products.json", JSON.stringify(scrapedData), "utf8", (err) => {
+  fs.writeFile("products.json", JSON.stringify(products), "utf8", (err) => {
     if (err) {
       return console.log(err);
     }

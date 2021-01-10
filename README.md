@@ -1,6 +1,6 @@
-# vinbudin-scraper
+# vinbudin
 
-> A scraper for www.vinbudin.is
+> Fetches product data from www.vinbudin.is
 
 ## Why?
 
@@ -8,75 +8,92 @@ Vínbúðin does not provide an open API. This package can be used to analyse th
 
 ## How?
 
-This package extracts data from every product page on www.vinbudin.is and returns a JSON Object.
+This package extracts data from www.vinbudin.is and returns a JSON Object.
 
 ## CLI
 
 The quickest way to try this package out is using the CLI:
 
 ```
-npx vinbudin-scraper
+npx vinbudin
 ```
 
-This will allow you to select what you want to scrape. The scraped data will be saved as a `products.json` file in the same folder that you ran the scraper.
-
-Try selecting `Cider and soda` as that should not take much more than 2 minutes to complete.
+This will allow you to select what product categories you want to fetch. The data will be saved as a `products.json` file in the same folder that you ran the package.
 
 ## Usage
 
 Install from npm and save to your `package.json`:
 
-    npm install vinbudin-scraper --save
+    npm install vinbudin --save
+
+## Methods
+
+### `vinbudin.get(products) -> promise`
+
+Gets products from www.vinbudin.is
+
+- **products** (Object) is an options object that you can optionally pass in if you want some subset of the data.
+
+It looks like this:
+
+```javascript
+{
+  beers: true,
+  redWines: true,
+  whiteWines: true,
+  roseWines: true,
+  sparklingWines: true,
+  dessertWines: true,
+  cidersAndSodas: true,
+  spirits: true,
+}
+```
 
 ## Examples
 
 ### Basic
 
 ```javascript
-const vinbudin = require("vinbudin-scraper");
+const vinbudin = require("vinbudin");
 
-vinbudin.scrape().then((scrapedData) => {
-  // Handle the scraped data
-  console.log(scrapedData);
+vinbudin.get().then((products) => {
+  // Handle the data
+  console.log(products);
 });
 
 // You can also provide an options object to get specific data
 vinbudin
-  .scrape({
-    beer: true,
-    redWine: true,
-    whiteWine: true,
-    roseWine: true,
-    sparklingWine: true,
-    dessertWine: true,
-    ciderAndSoda: true,
-    spirit: true,
+  .get({
+    beers: true,
+    redWines: true,
+    whiteWines: true,
+    roseWines: true,
+    sparklingWines: true,
+    dessertWines: true,
+    cidersAndSodas: true,
+    spirits: true,
   })
-  .then((scrapedData) => {
-    // Handle the scraped data
-    console.log(scrapedData);
+  .then((products) => {
+    // Handle the data
+    console.log(products);
   });
 ```
 
 ### Saving results to a local file
 
 ```javascript
-const vinbudin = require("vinbudin-scraper");
+const vinbudin = require("vinbudin");
 const fs = require("fs");
 
 async function vinbudinExample() {
-  const products = await vinbudin.scrape();
+  const products = await vinbudin.get();
 
-  const scrapedData = {
-    products,
-  };
-
-  fs.writeFile("data.json", JSON.stringify(scrapedData), "utf8", (err) => {
+  fs.writeFile("data.json", JSON.stringify(products), "utf8", (err) => {
     if (err) {
       return console.log(err);
     }
 
-    console.log("Scrape complete, see './data.json'");
+    console.log("Fetch complete, see './data.json'");
   });
 }
 

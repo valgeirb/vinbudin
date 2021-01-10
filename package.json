@@ -1,11 +1,11 @@
 {
-  "name": "vinbudin-scraper",
-  "version": "0.4.1",
+  "name": "vinbudin",
+  "version": "0.1.0",
   "bin": {
-    "vinbudin-scraper": "src/cli.js"
+    "vinbudin": "src/cli.js"
   },
-  "description": "A scraper for www.vinbudin.is",
-  "homepage": "https://github.com/valgeirb/vinbudin-scraper",
+  "description": "Fetches product data from www.vinbudin.is",
+  "homepage": "https://github.com/valgeirb/vinbudin",
   "main": "src/index.js",
   "files": [
     "src/"
@@ -23,7 +23,7 @@
   "dependencies": {
     "inquirer": "^7.3.3",
     "listr": "^0.14.3",
-    "puppeteer": "^5.5.0"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "prettier": "^2.2.1"
