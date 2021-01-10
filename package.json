@@ -19,6 +19,10 @@
     "url": "https://github.com/valgeirb"
   },
   "license": "MIT",
+  "keywords": [
+    "vinbudin",
+    "vinbudin scraper"
+  ],
   "dependencies": {
     "inquirer": "^7.3.3",
     "listr": "^0.14.3",
