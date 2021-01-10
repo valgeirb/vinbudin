@@ -37,11 +37,16 @@ async function promptForOptions() {
   const options = await promptForOptions();
   const products = await get(options);
 
-  fs.writeFile("products.json", JSON.stringify(products), "utf8", (err) => {
-    if (err) {
-      return console.log(err);
-    }
+  fs.writeFile(
+    "products.json",
+    JSON.stringify(products, null, 2),
+    "utf8",
+    (err) => {
+      if (err) {
+        return console.log(err);
+      }
 
-    console.log("Scrape complete, see './products.json'");
-  });
+      console.log("Fetch complete, see './products.json'");
+    },
+  );
 })();

@@ -88,13 +88,18 @@ const fs = require("fs");
 async function vinbudinExample() {
   const products = await vinbudin.get();
 
-  fs.writeFile("data.json", JSON.stringify(products), "utf8", (err) => {
-    if (err) {
-      return console.log(err);
-    }
+  fs.writeFile(
+    "data.json",
+    JSON.stringify(products, null, 2),
+    "utf8",
+    (err) => {
+      if (err) {
+        return console.log(err);
+      }
 
-    console.log("Fetch complete, see './data.json'");
-  });
+      console.log("Fetch complete, see './data.json'");
+    },
+  );
 }
 
 vinbudinExample();
