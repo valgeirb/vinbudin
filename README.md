@@ -65,12 +65,6 @@ vinbudin.get().then((products) => {
 vinbudin
   .get({
     beers: true,
-    redWines: true,
-    whiteWines: true,
-    roseWines: true,
-    sparklingWines: true,
-    dessertWines: true,
-    cidersAndSodas: true,
     spirits: true,
   })
   .then((products) => {
