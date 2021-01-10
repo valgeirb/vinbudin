@@ -1,3 +1,5 @@
+<img width="75px" height="75px" align="right" alt="Inquirer Logo" src="https://raw.githubusercontent.com/valgeirb/vinbudin/main/assets/vinbudin.svg?sanitize=true" title="vinbudin"/>
+
 # vinbudin
 
 > Fetches product data from www.vinbudin.is
