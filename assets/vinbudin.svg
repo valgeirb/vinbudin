@@ -1,25 +1,6 @@
-<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0)">
-<rect width="200" height="200" fill="#DA0000"/>
-<line x1="159.209" y1="160.915" x2="161.709" y2="165.245" stroke="white" stroke-width="5" stroke-linecap="round"/>
-<line x1="166.709" y1="173.905" x2="169.209" y2="178.236" stroke="white" stroke-width="5" stroke-linecap="round"/>
-<line x1="160.745" y1="171.575" x2="156.415" y2="174.075" stroke="white" stroke-width="5" stroke-linecap="round"/>
-<line x1="172.004" y1="165.075" x2="167.673" y2="167.575" stroke="white" stroke-width="5" stroke-linecap="round"/>
-<line x1="150.915" y1="116.209" x2="155.245" y2="118.709" stroke="white" stroke-width="5" stroke-linecap="round"/>
-<line x1="163.905" y1="123.709" x2="168.236" y2="126.209" stroke="white" stroke-width="5" stroke-linecap="round"/>
-<line x1="157.575" y1="124.673" x2="155.075" y2="129.004" stroke="white" stroke-width="5" stroke-linecap="round"/>
-<line x1="164.075" y1="113.415" x2="161.575" y2="117.745" stroke="white" stroke-width="5" stroke-linecap="round"/>
-<line x1="184.915" y1="143.209" x2="189.245" y2="145.709" stroke="white" stroke-width="5" stroke-linecap="round"/>
-<line x1="197.905" y1="150.709" x2="202.236" y2="153.209" stroke="white" stroke-width="5" stroke-linecap="round"/>
-<line x1="191.575" y1="151.673" x2="189.075" y2="156.004" stroke="white" stroke-width="5" stroke-linecap="round"/>
-<line x1="198.075" y1="140.415" x2="195.575" y2="144.745" stroke="white" stroke-width="5" stroke-linecap="round"/>
-<circle cx="144" cy="145" r="5" fill="white"/>
-<circle cx="181" cy="110" r="5" fill="white"/>
-<circle cx="183" cy="191" r="5" fill="white"/>
-</g>
-<defs>
-<clipPath id="clip0">
-<rect width="200" height="200" fill="white"/>
-</clipPath>
-</defs>
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="40" height="40" rx="5" fill="#DA0000"/>
+<circle cx="21.25" cy="27.9167" r="7.08333" fill="white"/>
+<circle cx="29.5833" cy="16.25" r="5.41667" fill="white"/>
+<circle cx="12.9167" cy="12.9167" r="7.91667" fill="white"/>
 </svg>
