@@ -4,6 +4,8 @@
 
 > Fetches product data from www.vinbudin.is
 
+<img src="https://raw.githubusercontent.com/valgeirb/vinbudin/main/assets/vinbudin.gif">
+
 ## Why?
 
 Vínbúðin does not provide an open API. This package can be used to analyse their product data or create something else from it.
