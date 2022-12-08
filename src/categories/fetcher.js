@@ -10,7 +10,7 @@ module.exports = function productType(category) {
 
       const products = await fetch(url);
 
-      return dessertWines.map((beverage) => ({
+      return products.map((beverage) => ({
         ...beverage,
         ProductImageUrl: `${photoUrl}/${beverage.ProductID}_r.jpg`,
       }));
