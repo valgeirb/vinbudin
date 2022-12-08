@@ -21,7 +21,7 @@ export interface Beverage {
   ProductPlaceOfOrigin: string;
   ProductDistrictOfOrigin: string;
   ProductWine: string;
-  ProductInventory: number
+  ProductInventory: number;
   ProductYear: string;
   ProductDateOnMarket: string;
   ProductIsTemporaryOnSale: boolean;
@@ -36,13 +36,13 @@ export interface Beverage {
   ProductPackagingClosing: string;
   ProductSpecialMarking: string[];
   ProductSeasonCode: string;
-  MinimumQuantity: number
+  MinimumQuantity: number;
   UseMinimumQuantityAsUnit: boolean;
   IsSpecialOrderAndOutOfStock: boolean;
   ProductSearchGrape: string;
   ProductProducer: string;
   ProductShortDescription: string;
-  ProductBackupInventory: number
+  ProductBackupInventory: number;
   ProductPackagingWeight: number;
   ProductCarbonFootprint: number;
   ProductAvailableUnits: string;
@@ -50,13 +50,13 @@ export interface Beverage {
 }
 
 export function get(options?: {
-  beers: boolean;
-  redWines: boolean;
-  whiteWines: boolean;
-  roseWines: boolean;
-  sparklingWines: boolean;
-  dessertWines: boolean;
-  cidersAndSodas: boolean;
-  spirits: boolean;
+  beers?: boolean;
+  redWines?: boolean;
+  whiteWines?: boolean;
+  roseWines?: boolean;
+  sparklingWines?: boolean;
+  dessertWines?: boolean;
+  cidersAndSodas?: boolean;
+  spirits?: boolean;
 }): Promise<{}>;
 //# sourceMappingURL=index.d.ts.map
