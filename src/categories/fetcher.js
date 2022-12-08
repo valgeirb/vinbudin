@@ -8,7 +8,7 @@ module.exports = function productType(category) {
       const photoUrl =
         "https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/original";
 
-      const dessertWines = await fetch(url);
+      const products = await fetch(url);
 
       return dessertWines.map((beverage) => ({
         ...beverage,
