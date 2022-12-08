@@ -1,6 +1,6 @@
 {
   "name": "vinbudin",
-  "version": "0.1.7",
+  "version": "1.0.0",
   "bin": {
     "vinbudin": "src/cli.js"
   },
