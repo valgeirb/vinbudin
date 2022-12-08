@@ -8,8 +8,10 @@
   "homepage": "https://github.com/valgeirb/vinbudin",
   "main": "src/index.js",
   "files": [
-    "src/"
+    "src/",
+    "dist/"
   ],
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
