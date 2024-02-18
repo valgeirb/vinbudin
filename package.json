@@ -2,17 +2,23 @@
   "name": "vinbudin",
   "version": "1.0.0",
   "bin": {
-    "vinbudin": "src/cli.js"
+    "vinbudin": "dist/src/cli.js"
   },
   "description": "Fetches product data from www.vinbudin.is",
   "homepage": "https://github.com/valgeirb/vinbudin",
-  "main": "src/index.js",
-  "files": [
-    "src/",
-    "dist/"
-  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "type": "module",
+  "main": "dist/src/index.js",
+  "module": "dist/src/index.mjs",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "build": "tsup src/index.ts src/cli.ts",
+    "release": "npm run build && npm publish && git push --follow-tags",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": {
@@ -26,12 +32,15 @@
     "vinbudin scraper"
   ],
   "dependencies": {
-    "inquirer": "^7.3.3",
-    "listr": "^0.14.3",
-    "node-fetch": "^2.6.1",
-    "tsc": "^2.0.4"
+    "inquirer": "^9.2.14",
+    "listr2": "^8.0.2",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "prettier": "^2.2.1"
+    "@types/inquirer": "^9.0.7",
+    "prettier": "^2.8.8",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
   }
 }

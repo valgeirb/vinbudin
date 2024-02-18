@@ -2,7 +2,10 @@
 
 # vinbudin
 
-> Fetches product data from www.vinbudin.is
+## Features
+
+- ⚡ Fetches product data from www.vinbudin.is
+- 🏷️ Fully typed
 
 <img src="https://raw.githubusercontent.com/valgeirb/vinbudin/main/assets/vinbudin.gif">
 
@@ -24,15 +27,22 @@ npx vinbudin
 
 This will allow you to select what product categories you want to fetch. The data will be saved as a `products.json` file in the same folder that you ran the package.
 
-## Usage
+## Setup
 
-Install from npm and save to your `package.json`:
+```bash
+# pnpm
+pnpm add -D vinbudin
 
-    npm install vinbudin --save
+# npm
+npm i -D vinbudin
+
+# yarn
+yarn add -D vinbudin
+```
 
 ## Methods
 
-### `vinbudin.get(products) -> promise`
+### `vinbudin.getProducts(products) -> promise`
 
 Gets products from www.vinbudin.is
 
@@ -42,14 +52,16 @@ It looks like this:
 
 ```javascript
 {
-  beers: true,
-  redWines: true,
-  whiteWines: true,
-  roseWines: true,
-  sparklingWines: true,
-  dessertWines: true,
-  cidersAndSodas: true,
-  spirits: true,
+  beer: true,
+  red: true,
+  white: true,
+  rose: true,
+  bubbly: true,
+  fortified: true,
+  ciderfruitandblends: true,
+  sakeandmead: true,
+  strong: true,
+  aromatised: true,
 }
 ```
 
@@ -57,48 +69,20 @@ It looks like this:
 
 ### Basic
 
-```javascript
-const vinbudin = require("vinbudin");
+```ts
+import { getProducts } from 'vinbudin'
 
-vinbudin.get().then((products) => {
+getProducts().then((products) => {
   // Handle the data
-  console.log(products);
-});
+  console.log(products)
+})
 
 // You can also provide an options object to get specific data
-vinbudin
-  .get({
-    beers: true,
-    spirits: true,
-  })
-  .then((products) => {
-    // Handle the data
-    console.log(products);
-  });
-```
-
-### Saving results to a local file
-
-```javascript
-const vinbudin = require("vinbudin");
-const fs = require("fs");
-
-async function vinbudinExample() {
-  const products = await vinbudin.get();
-
-  fs.writeFile(
-    "data.json",
-    JSON.stringify(products, null, 2),
-    "utf8",
-    (err) => {
-      if (err) {
-        return console.log(err);
-      }
-
-      console.log("Fetch complete, see './data.json'");
-    },
-  );
-}
-
-vinbudinExample();
+getProducts({
+  beer: true,
+  bubbly: true,
+}).then((products) => {
+  // Handle the data
+  console.log(products)
+})
 ```
