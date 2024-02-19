@@ -26,6 +26,9 @@ npm i -D vinbudin
 yarn add -D vinbudin
 ```
 
+> [!WARNING]
+> This package is native [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and does not provide a CommonJS export. If your project uses CommonJS, you will have to [convert to ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Please don't open issues for questions regarding CommonJS / ESM.
+
 ## Why?
 
 Vínbúðin does not provide an open API. This package can be used to analyse their product data or create something else from it.
