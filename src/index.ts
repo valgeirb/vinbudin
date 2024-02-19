@@ -1,20 +1,13 @@
-import { Listr } from 'listr2'
 import categories from './categories/index.js'
 import { Category, CategoryData, CategoryOptions } from '../types/types.js'
 
+/**
+ * Fetches products from the Vinbudin API
+ * @param options - An object with keys for each category, and a boolean value to determine if the category should be fetched
+ * @returns An object with keys for each category, and an array of products as the value
+ */
 export const getProducts = async function (
-  options: CategoryOptions = {
-    beer: true,
-    red: true,
-    white: true,
-    rose: true,
-    bubbly: true,
-    fortified: true,
-    ciderfruitandblends: true,
-    sakeandmead: true,
-    strong: true,
-    aromatised: true,
-  },
+  options?: CategoryOptions,
 ): Promise<CategoryData> {
   let data: CategoryData = {}
   const availableCategories: Category[] = [
@@ -30,20 +23,12 @@ export const getProducts = async function (
     Category.Aromatised,
   ]
 
-  const tasks = new Listr(
-    availableCategories.map((category: Category) => ({
-      title: category,
-      task: async () => {
-        data[category] = await categories[category]()
-      },
-      skip: () => !options[category],
-    })),
-    { concurrent: true },
-  )
-
-  await tasks.run().catch((err) => {
-    console.error('Tasks', err)
-  })
+  // Fetch data for each category by default, unless options are provided
+  for (const category of availableCategories) {
+    if (!options || options[category]) {
+      data[category] = await categories[category]()
+    }
+  }
 
   return data
 }

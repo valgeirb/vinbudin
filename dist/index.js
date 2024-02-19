@@ -38,26 +38,40 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 
-// src/index.ts
-import { Listr } from "listr2";
+// src/utils/camelCaseKeys.ts
+function camelCaseKeys(obj) {
+  if (typeof obj !== "object" || obj === null) {
+    return obj;
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(camelCaseKeys);
+  }
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => {
+      let camelCaseKey = key.replace(/ID/g, "Id");
+      camelCaseKey = camelCaseKey.charAt(0).toLowerCase() + camelCaseKey.slice(1);
+      return [camelCaseKey, camelCaseKeys(value)];
+    })
+  );
+}
 
 // src/fetchProducts.ts
-import fetch from "node-fetch";
 var fetchProducts = (url) => __async(void 0, null, function* () {
   try {
-    const res = yield fetch(url, {
+    const response = yield fetch(url, {
       headers: {
         accept: "application/json, text/javascript, */*; q=0.01",
         "accept-language": "en-US,en;q=0.9,is;q=0.8",
         "content-type": "application/json; charset=utf-8"
-      },
-      method: "GET"
+      }
     });
-    if (!res.ok) {
+    if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
-    const jsonData = yield res.json();
-    const products = JSON.parse(jsonData.d).data;
+    const jsonData = yield response.json();
+    const products = JSON.parse(jsonData.d).data.map(
+      (product) => camelCaseKeys(product)
+    );
     return products;
   } catch (error) {
     throw new Error("Failed to fetch products: " + error);
@@ -66,9 +80,9 @@ var fetchProducts = (url) => __async(void 0, null, function* () {
 
 // src/categories/fetcher.ts
 function maxDigits(list) {
-  let max = list[0].ProductID.toString().length;
+  let max = list[0].productId.toString().length;
   for (let index = 1; index < list.length; index++) {
-    const digits = list[index].ProductID.toString().length;
+    const digits = list[index].productId.toString().length;
     if (digits > max) {
       max = digits;
     }
@@ -84,9 +98,9 @@ function fetcher(category) {
         const products = yield fetchProducts(url);
         const maxIdLength = maxDigits(products);
         return products.map((beverage) => {
-          const productIdLength = beverage.ProductID.toString().length;
+          const productIdLength = beverage.productId.toString().length;
           return __spreadProps(__spreadValues({}, beverage), {
-            ProductImageUrl: `${photoUrl}/${productIdLength < maxIdLength ? parseInt("0".repeat(maxIdLength - productIdLength)) : ""}${beverage.ProductID}_r.jpg`
+            productImageUrl: `${photoUrl}/${productIdLength < maxIdLength ? parseInt("0".repeat(maxIdLength - productIdLength)) : ""}${beverage.productId}_r.jpg`
           });
         });
       } catch (err) {
@@ -113,19 +127,8 @@ var data = {
 var categories_default = data;
 
 // src/index.ts
-var getProducts = function() {
-  return __async(this, arguments, function* (options = {
-    beer: true,
-    red: true,
-    white: true,
-    rose: true,
-    bubbly: true,
-    fortified: true,
-    ciderfruitandblends: true,
-    sakeandmead: true,
-    strong: true,
-    aromatised: true
-  }) {
+var getProducts = function(options) {
+  return __async(this, null, function* () {
     let data2 = {};
     const availableCategories = [
       "beer" /* Beer */,
@@ -139,19 +142,11 @@ var getProducts = function() {
       "strong" /* Strong */,
       "aromatised" /* Aromatised */
     ];
-    const tasks = new Listr(
-      availableCategories.map((category) => ({
-        title: category,
-        task: () => __async(this, null, function* () {
-          data2[category] = yield categories_default[category]();
-        }),
-        skip: () => !options[category]
-      })),
-      { concurrent: true }
-    );
-    yield tasks.run().catch((err) => {
-      console.error("Tasks", err);
-    });
+    for (const category of availableCategories) {
+      if (!options || options[category]) {
+        data2[category] = yield categories_default[category]();
+      }
+    }
     return data2;
   });
 };

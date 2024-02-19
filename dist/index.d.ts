@@ -1,52 +1,52 @@
 type Product = {
-    ProductID: number;
-    ProductName: string;
-    ProductBottledVolume: number;
-    ProductAlchoholVolume: number;
-    ProductPrice: number;
-    ProductCategory: {
+    productId: number;
+    productName: string;
+    productBottledVolume: number;
+    productAlchoholVolume: number;
+    productPrice: number;
+    productCategory: {
         name: string;
         id: string[];
         taste: boolean;
         sweet: boolean;
         subCategories: null | string[];
     };
-    ProductSubCategory: null | string;
-    ProductCountryOfOrigin: string;
-    ProductSpecialReserve: boolean;
-    ProductOrganic: boolean;
-    ProductContainerType: string;
-    ProductPlaceOfOrigin: string;
-    ProductDistrictOfOrigin: string;
-    ProductWine: string;
-    ProductInventory: number;
-    ProductDateOnMarket: string;
-    ProductIsTemporaryOnSale: boolean;
-    ProductIsGift: boolean;
-    ProductIsInThema: boolean;
-    ProductIsAvailableInStores: boolean;
-    ProductIsSpecialOrder: boolean;
-    ProductStoreSelected: null | string;
-    ProductTasteGroup: string;
-    ProductTasteGroup2: string;
-    ProductTasteGroup2Description: null | string;
-    ProductPackagingClosing: string;
-    ProductPackagingContainer: string;
-    ProductSpecialMarking: string[];
-    ProductSeasonCode: string;
-    MinimumQuantity: number;
-    UseMinimumQuantityAsUnit: boolean;
-    IsSpecialOrderAndOutOfStock: boolean;
-    ProductSearchGrape: string;
-    ProductProducer: string;
-    ProductShortDescription: string;
-    ProductBackupInventory: number;
-    ProductPackagingWeight: number;
-    ProductCarbonFootprint: number;
-    SupplierId: null | string;
-    ProductAvailableUnits: string;
-    ProductSaleStatus: string;
-    ProductImageUrl: string;
+    productSubCategory: null | string;
+    productCountryOfOrigin: string;
+    productSpecialReserve: boolean;
+    productOrganic: boolean;
+    productContainerType: string;
+    productPlaceOfOrigin: string;
+    productDistrictOfOrigin: string;
+    productWine: string;
+    productInventory: number;
+    productDateOnMarket: string;
+    productIsTemporaryOnSale: boolean;
+    productIsGift: boolean;
+    productIsInThema: boolean;
+    productIsAvailableInStores: boolean;
+    productIsSpecialOrder: boolean;
+    productStoreSelected: null | string;
+    productTasteGroup: string;
+    productTasteGroup2: string;
+    productTasteGroup2Description: null | string;
+    productPackagingClosing: string;
+    productPackagingContainer: string;
+    productSpecialMarking: string[];
+    productSeasonCode: string;
+    minimumQuantity: number;
+    useMinimumQuantityAsUnit: boolean;
+    isSpecialOrderAndOutOfStock: boolean;
+    productSearchGrape: string;
+    productProducer: string;
+    productShortDescription: string;
+    productBackupInventory: number;
+    productPackagingWeight: number;
+    productCarbonFootprint: number;
+    supplierId: null | string;
+    productAvailableUnits: string;
+    productSaleStatus: string;
+    productImageUrl: string;
 };
 declare enum Category {
     Beer = "beer",
@@ -67,6 +67,11 @@ type CategoryOptions = {
     [value in Category]?: boolean;
 };
 
+/**
+ * Fetches products from the Vinbudin API
+ * @param options - An object with keys for each category, and a boolean value to determine if the category should be fetched
+ * @returns An object with keys for each category, and an array of products as the value
+ */
 declare const getProducts: (options?: CategoryOptions) => Promise<CategoryData>;
 
 export { getProducts };

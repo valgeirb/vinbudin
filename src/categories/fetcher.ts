@@ -1,11 +1,11 @@
-import { Category, Product } from '../../types/types.js'
+import { Category, Fetcher, Product } from '../../types/types.js'
 import { fetchProducts } from '../fetchProducts.js'
 
-// This function is used to find the maximum number of digits in the ProductID
+// This function is used to find the maximum number of digits in the productId
 function maxDigits(list: Product[]): number {
-  let max = list[0].ProductID.toString().length
+  let max = list[0].productId.toString().length
   for (let index = 1; index < list.length; index++) {
-    const digits = list[index].ProductID.toString().length
+    const digits = list[index].productId.toString().length
     if (digits > max) {
       max = digits
     }
@@ -14,7 +14,7 @@ function maxDigits(list: Product[]): number {
   return max
 }
 
-export default function fetcher(category: Category): any {
+export default function fetcher(category: Category): Fetcher {
   async function inner() {
     try {
       const url = `https://www.vinbudin.is/addons/origo/module/ajaxwebservices/search.asmx/DoSearch?skip=0&count=99999&category=${category}`
@@ -25,17 +25,17 @@ export default function fetcher(category: Category): any {
 
       const maxIdLength = maxDigits(products)
 
-      // Make sure the ProductImageUrl is correct by adding leading zeros to the ProductID
+      // Make sure the productImageUrl is correct by adding leading zeros to the productId
       return products.map((beverage: Product): Product => {
-        const productIdLength = beverage.ProductID.toString().length
+        const productIdLength = beverage.productId.toString().length
 
         return {
           ...beverage,
-          ProductImageUrl: `${photoUrl}/${
+          productImageUrl: `${photoUrl}/${
             productIdLength < maxIdLength
               ? parseInt('0'.repeat(maxIdLength - productIdLength))
               : ''
-          }${beverage.ProductID}_r.jpg`,
+          }${beverage.productId}_r.jpg`,
         }
       })
     } catch (err) {

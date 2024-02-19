@@ -1,31 +1,19 @@
-<img width="75px" height="75px" align="right" alt="Vinbudin Logo" src="https://raw.githubusercontent.com/valgeirb/vinbudin/main/assets/vinbudin.svg?sanitize=true" title="vinbudin"/>
+![vinbudin](./.github/hero.png)
+
+# vinbudin
+
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![License][license-src]][license-href]
+
+> An NPM package to fetch product data from [Vínbúðin](https://www.vinbudin.is/heim).
 
 # vinbudin
 
 ## Features
 
-- ⚡ Fetches product data from www.vinbudin.is
-- 🏷️ Fully typed
-
-<img src="https://raw.githubusercontent.com/valgeirb/vinbudin/main/assets/vinbudin.gif">
-
-## Why?
-
-Vínbúðin does not provide an open API. This package can be used to analyse their product data or create something else from it.
-
-## How?
-
-This package extracts data from www.vinbudin.is and returns a JSON Object.
-
-## CLI
-
-The quickest way to try this package out is using the CLI:
-
-```
-npx vinbudin
-```
-
-This will allow you to select what product categories you want to fetch. The data will be saved as a `products.json` file in the same folder that you ran the package.
+- ⚡ Fetch categorized product data from www.vinbudin.is
+- 🏷️ Fully typed API
 
 ## Setup
 
@@ -40,9 +28,36 @@ npm i -D vinbudin
 yarn add -D vinbudin
 ```
 
+## Why?
+
+Vínbúðin does not provide an open API. This package can be used to analyse their product data or create something else from it.
+
+## Basic Usage
+
+```ts
+import { getProducts } from 'vinbudin'
+
+getProducts().then((products) => {
+  // Handle the data
+  console.log(products)
+})
+
+// You can also provide an options object to only get specific data
+getProducts({
+  beer: true,
+  bubbly: true,
+}).then((products) => {
+  // Handle the data
+  console.log(products)
+})
+```
+
+> [!NOTE]
+> This package is designed to be used in a server-side environment. Due to restrictions imposed by browsers regarding cross-origin requests (CORS), attempting to use this package in a client-side (browser) environment may result in errors related to CORS policies.
+
 ## Methods
 
-### `vinbudin.getProducts(products) -> promise`
+### `getProducts(products) -> promise`
 
 Gets products from www.vinbudin.is
 
@@ -50,7 +65,7 @@ Gets products from www.vinbudin.is
 
 It looks like this:
 
-```javascript
+```ts
 {
   beer: true,
   red: true,
@@ -65,24 +80,36 @@ It looks like this:
 }
 ```
 
-## Examples
+## Working with Client-Side Environments
 
-### Basic
+While this package is primarily intended for use in server-side environments, such as Node.js applications, there are workarounds available for integrating it into client-side environments.
+
+Both Nuxt and Next.js support API routes as an example:
+
+- [Nuxt API routes](https://nuxt.com/docs/guide/directory-structure/server)
+- [Next.js API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes)
+
+## Example using Nuxt API routes
 
 ```ts
+// server/api/vinbudin.ts
 import { getProducts } from 'vinbudin'
 
-getProducts().then((products) => {
-  // Handle the data
-  console.log(products)
-})
+export default defineEventHandler(async () => {
+  return await getProducts({ beer: true })
+)
 
-// You can also provide an options object to get specific data
-getProducts({
-  beer: true,
-  bubbly: true,
-}).then((products) => {
-  // Handle the data
-  console.log(products)
-})
+// Component
+<script setup lang="ts">
+const { data } = await useFetch('/api/vinbudin')
+</script>
 ```
+
+<!-- Badges -->
+
+[npm-version-src]: https://img.shields.io/npm/v/vinbudin/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-version-href]: https://npmjs.com/package/vinbudin
+[npm-downloads-src]: https://img.shields.io/npm/dm/vinbudin.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-downloads-href]: https://npmjs.com/package/vinbudin
+[license-src]: https://img.shields.io/npm/l/vinbudin.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: https://npmjs.com/package/vinbudin
