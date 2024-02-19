@@ -12,6 +12,7 @@
 
 - ⚡ Fetch categorized product data from www.vinbudin.is
 - 🏷️ Fully typed API
+- 🌱 Zero dependencies
 
 ## Setup
 
@@ -53,6 +54,63 @@ getProducts({
 })
 ```
 
+## Example response
+
+```ts
+{
+  productId: 28304,
+  productName: 'Ölverk Sóði Þorrabjór',
+  productBottledVolume: 330,
+  productAlchoholVolume: 7,
+  productPrice: 642,
+  productFoodCategories: '',
+  productCategory: {
+    name: 'beer',
+    id: [ '60', '61', '62' ],
+    taste: true,
+    sweet: false,
+    subCategories: null
+  },
+  productSubCategory: null,
+  productCountryOfOrigin: 'ísland',
+  productSpecialReserve: false,
+  productOrganic: false,
+  productContainerType: 'DS.',
+  productPlaceOfOrigin: '',
+  productDistrictOfOrigin: '',
+  productWine: '',
+  productInventory: 0,
+  productYear: '',
+  productDateOnMarket: '2024-01-11T00:00:00',
+  productIsTemporaryOnSale: false,
+  productIsGift: false,
+  productIsInThema: false,
+  productIsAvailableInStores: true,
+  productIsSpecialOrder: false,
+  productStoreSelected: null,
+  productTasteGroup: '61BE',
+  productTasteGroup2: 'BPALE',
+  productTasteGroup2Description: null,
+  productPackagingClosing: '',
+  productPackagingContainer: 'ALDOS',
+  productSpecialMarking: [],
+  productSeasonCode: 'ÞORRI',
+  minimumQuantity: 0,
+  useMinimumQuantityAsUnit: false,
+  isSpecialOrderAndOutOfStock: false,
+  productSearchGrape: '',
+  productProducer: 'Einfalt ehf.',
+  productShortDescription: 'Ölverk Sóði Þorrabjór',
+  productBackupInventory: 0,
+  productPackagingWeight: 6.68,
+  productCarbonFootprint: 31.93,
+  supplierId: null,
+  productAvailableUnits: '24',
+  productSaleStatus: '-2',
+  productImageUrl: 'https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/original/28304_r.jpg'
+}
+```
+
 > [!NOTE]
 > This package is designed to be used in a server-side environment. Due to restrictions imposed by browsers regarding cross-origin requests (CORS), attempting to use this package in a client-side (browser) environment may result in errors related to CORS policies.
 
@@ -81,9 +139,9 @@ It looks like this:
 }
 ```
 
-## Working with Client-Side Environments
+## Working with client-side environments
 
-While this package is primarily intended for use in server-side environments, such as Node.js applications, there are workarounds available for integrating it into client-side environments.
+While this package is intended for use in server-side environments, such as Node.js applications, there are workarounds available for integrating it into client-side environments.
 
 Both Nuxt and Next.js support API routes as an example:
 
