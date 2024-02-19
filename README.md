@@ -8,8 +8,6 @@
 
 > An NPM package to fetch product data from [Vínbúðin](https://www.vinbudin.is/heim).
 
-# vinbudin
-
 ## Features
 
 - ⚡ Fetch categorized product data from www.vinbudin.is
