@@ -20,7 +20,9 @@ export const fetchProducts = async (url: string): Promise<Product[]> => {
 
     const products: Product[] = JSON.parse(jsonData.d)
       .data.map((product: any) => camelCaseKeys(product))
-      .map((product: any) => parse(productSchema, product))
+      .map((product: any) =>
+        parse(productSchema, product, { abortEarly: true }),
+      )
 
     return products
   } catch (error) {
