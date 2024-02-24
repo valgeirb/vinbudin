@@ -12,7 +12,7 @@
 
 - ⚡ Fetch categorized product data from www.vinbudin.is
 - 🏷️ Fully typed API
-- 🌱 Zero dependencies
+- ✅ Fully validated product data
 
 ## Setup
 

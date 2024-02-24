@@ -1,5 +1,6 @@
-import { Product } from '../types/types.js'
+import { Product, productSchema } from '../types/types.js'
 import { camelCaseKeys } from './utils/camelCaseKeys.js'
+import { parse } from 'valibot'
 
 export const fetchProducts = async (url: string): Promise<Product[]> => {
   try {
@@ -17,9 +18,9 @@ export const fetchProducts = async (url: string): Promise<Product[]> => {
 
     const jsonData = await response.json()
 
-    const products: Product[] = JSON.parse(jsonData.d).data.map(
-      (product: any) => camelCaseKeys(product),
-    )
+    const products: Product[] = JSON.parse(jsonData.d)
+      .data.map((product: any) => camelCaseKeys(product))
+      .map((product: any) => parse(productSchema, product))
 
     return products
   } catch (error) {

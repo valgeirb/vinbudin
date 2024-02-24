@@ -32,5 +32,8 @@
     "ts-node": "^10.9.2",
     "tsup": "^8.0.2",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "valibot": "^0.29.0"
   }
 }
