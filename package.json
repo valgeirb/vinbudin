@@ -1,6 +1,6 @@
 {
   "name": "vinbudin",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Fetches product data from www.vinbudin.is",
   "homepage": "https://github.com/valgeirb/vinbudin",
   "engines": {
