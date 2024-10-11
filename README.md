@@ -155,8 +155,8 @@ Both Nuxt and Next.js support API routes as an example:
 import { getProducts } from 'vinbudin'
 
 export default defineEventHandler(async () => {
-  return await getProducts({ beer: true })
-)
+  return await getProducts({ beer: true });
+})
 
 // Component
 <script setup lang="ts">
