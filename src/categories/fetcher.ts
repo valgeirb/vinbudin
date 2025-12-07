@@ -18,24 +18,30 @@ export default function fetcher(category: Category): Fetcher {
   async function inner() {
     try {
       const url = `https://www.vinbudin.is/addons/origo/module/ajaxwebservices/search.asmx/DoSearch?skip=0&count=99999&category=${category}`
-      const photoUrl =
+      const photoUrlOriginal =
         'https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/original'
+      const photoUrlMedium =
+        'https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium'
 
       const products = await fetchProducts(url)
 
       const maxIdLength = maxDigits(products)
 
-      // Make sure the productImageUrl is correct by adding leading zeros to the productId
+      // Make sure the product image URLs are correct by adding leading zeros to the productId
       return products.map((beverage: Product): Product => {
         const productIdLength = beverage.productId.toString().length
+        const paddedId = `${
+          productIdLength < maxIdLength
+            ? parseInt('0'.repeat(maxIdLength - productIdLength))
+            : ''
+        }${beverage.productId}_r.jpg`
 
         return {
           ...beverage,
-          productImageUrl: `${photoUrl}/${
-            productIdLength < maxIdLength
-              ? parseInt('0'.repeat(maxIdLength - productIdLength))
-              : ''
-          }${beverage.productId}_r.jpg`,
+          productImages: {
+            original: `${photoUrlOriginal}/${paddedId}`,
+            medium: `${photoUrlMedium}/${paddedId}`,
+          },
         }
       })
     } catch (err) {

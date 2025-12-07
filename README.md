@@ -13,6 +13,7 @@
 - ⚡ Fetch categorized product data from www.vinbudin.is
 - 🏷️ Fully typed API
 - ✅ Fully validated product data
+- 🖼️ Multiple image sizes for optimal performance
 
 ## Setup
 
@@ -107,9 +108,38 @@ getProducts({
   supplierId: null,
   productAvailableUnits: '24',
   productSaleStatus: '-2',
-  productImageUrl: 'https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/original/28304_r.jpg'
+  productImages: {
+    original: 'https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/original/28304_r.jpg',
+    medium: 'https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/28304_r.jpg'
+  }
 }
 ```
+
+## Image Sizes
+
+Each product includes multiple image sizes for optimal performance:
+
+- **`productImages.original`**: Full resolution (384×1417px, ~350KB) - Best for detail views
+- **`productImages.medium`**: Optimized resolution (108×400px, ~35KB) - **90% smaller!** Perfect for thumbnails and lists
+
+### Usage Example
+
+```ts
+const products = await getProducts({ beer: true })
+
+// Use optimized medium size for thumbnails/lists
+const thumbnailUrl = products[0].productImages.medium // 90% smaller!
+
+// Use original for full-quality detail views
+const fullResUrl = products[0].productImages.original
+```
+
+### Use Cases
+
+- **Thumbnails/Lists**: Use `productImages.medium` for fast loading in product grids
+- **Detail Views**: Use `productImages.original` for high-quality product pages
+- **Responsive Design**: Load `medium` on mobile, `original` on desktop
+- **Progressive Loading**: Display `medium` first, then lazy-load `original`
 
 > [!NOTE]
 > This package is designed to be used in a server-side environment. Due to restrictions imposed by browsers regarding cross-origin requests (CORS), attempting to use this package in a client-side (browser) environment may result in errors related to CORS policies.

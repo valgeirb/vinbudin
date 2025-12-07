@@ -62,10 +62,13 @@ export const productSchema = transform(
     productAvailableUnits: string(),
     productSaleStatus: string(),
   }),
-  // Add the productImageUrl to the schema after the object has been created
+  // Add the product images to the schema after the object has been created
   (input) => ({
     ...input,
-    productImageUrl: string(),
+    productImages: {
+      original: '',
+      medium: '',
+    },
   }),
 )
 
