@@ -1,5 +1,23 @@
 import categories from './categories/index.js'
-import { Category, CategoryData, CategoryOptions } from '../types/types.js'
+import {
+  Category,
+  CategoryData,
+  CategoryOptions,
+  type ProductRequestOptions,
+} from '../types/types.js'
+
+export { getProductSnapshot } from './fetchProducts.js'
+export { getStores } from './stores.js'
+export { Category } from '../types/types.js'
+export type {
+  Product,
+  ProductSnapshot,
+  ProductRequestOptions,
+  RequestOptions,
+  Store,
+  CategoryData,
+  CategoryOptions,
+} from '../types/types.js'
 
 /**
  * Fetches products from the Vinbudin API
@@ -8,6 +26,7 @@ import { Category, CategoryData, CategoryOptions } from '../types/types.js'
  */
 export const getProducts = async function (
   options?: CategoryOptions,
+  requestOptions?: ProductRequestOptions,
 ): Promise<CategoryData> {
   let data: CategoryData = {}
   const availableCategories: Category[] = [
@@ -26,7 +45,7 @@ export const getProducts = async function (
   // Fetch data for each category by default, unless options are provided
   for (const category of availableCategories) {
     if (!options || options[category]) {
-      data[category] = await categories[category]()
+      data[category] = await categories[category](requestOptions)
     }
   }
 

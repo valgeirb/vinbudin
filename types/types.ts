@@ -41,7 +41,16 @@ export const productSchema = transform(
     productIsInThema: boolean(),
     productIsAvailableInStores: boolean(),
     productIsSpecialOrder: boolean(),
-    productStoreSelected: nullable(any()),
+    productStoreSelected: nullable(
+      object({
+        id: number(),
+        code: string(),
+        name: string(),
+        quantity: number(),
+        created: string(),
+        modified: string(),
+      }),
+    ),
     productTasteGroup: string(),
     productTasteGroup2: string(),
     productTasteGroup2Description: nullable(any()),
@@ -95,7 +104,38 @@ export type CategoryOptions = {
   [value in Category]?: boolean
 }
 
-export type Fetcher = () => Promise<Product[] | undefined>
+export interface RequestOptions {
+  signal?: AbortSignal
+  timeoutMs?: number
+}
+
+export interface ProductRequestOptions extends RequestOptions {
+  /** Vínbúðin's three-digit store code (not its news/article ID). */
+  storeCode?: string
+}
+
+export interface ProductSnapshot {
+  category: `${Category}`
+  storeCode: string | null
+  /**
+   * Local UTC ISO timestamp captured immediately before starting the request.
+   * This is the check-start time, not completion time or an upstream revision.
+   * Requests started in the same millisecond may have equal timestamps.
+   */
+  fetchedAt: string
+  total: number
+  products: Product[]
+}
+
+export interface Store {
+  code: string
+  name: string
+  address: string
+  latitude: number | null
+  longitude: number | null
+}
+
+export type Fetcher = (options?: ProductRequestOptions) => Promise<Product[]>
 
 export type Fetchers = {
   [value in Category]: Fetcher

@@ -1,6 +1,6 @@
 {
   "name": "vinbudin",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Fetches product data from www.vinbudin.is",
   "homepage": "https://github.com/valgeirb/vinbudin",
   "engines": {
@@ -15,7 +15,8 @@
   "scripts": {
     "build": "tsup src/index.ts",
     "release": "npm run build && npm publish && git push --follow-tags",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "pnpm build && node --test tests/*.test.mjs",
+    "typecheck": "tsc --noEmit"
   },
   "author": {
     "name": "Valgeir Björnsson",

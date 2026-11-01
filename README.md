@@ -55,7 +55,7 @@ getProducts({
 })
 ```
 
-## Example response
+## Example product
 
 ```ts
 {
@@ -125,13 +125,13 @@ Each product includes multiple image sizes for optimal performance:
 ### Usage Example
 
 ```ts
-const products = await getProducts({ beer: true })
+const { beer = [] } = await getProducts({ beer: true })
 
 // Use optimized medium size for thumbnails/lists
-const thumbnailUrl = products[0].productImages.medium // 90% smaller!
+const thumbnailUrl = beer[0]?.productImages.medium // 90% smaller!
 
 // Use original for full-quality detail views
-const fullResUrl = products[0].productImages.original
+const fullResUrl = beer[0]?.productImages.original
 ```
 
 ### Use Cases
@@ -146,11 +146,72 @@ const fullResUrl = products[0].productImages.original
 
 ## Methods
 
-### `getProducts(products) -> promise`
+### Complete snapshots and stores (3.1.0)
 
-Gets products from www.vinbudin.is
+Version `3.1.0` adds `getProductSnapshot`, `getStores`, and optional store filtering.
 
-- **products** (Object) is an options object that you can optionally pass in if you want some subset of the data.
+**Migration from 3.0.0:** Existing `getProducts({ beer: true })` calls keep their
+successful result shape. Failed, aborted, timed-out, or malformed requests now
+**reject** instead of returning an undefined category. Handle these rejections
+explicitly; do not treat them as an empty assortment.
+
+Use a snapshot when reconciling a local catalog:
+
+```ts
+import { getProductSnapshot, getStores } from 'vinbudin'
+
+const snapshot = await getProductSnapshot('beer')
+// { category: 'beer', storeCode: null, fetchedAt, total, products }
+
+const stores = await getStores()
+// [{ code, name, address, latitude, longitude }]
+
+const local = await getProductSnapshot('beer', { storeCode: stores[0].code })
+const stock = local.products[0]?.productStoreSelected
+// null, or { id, code, name, quantity, created, modified }
+```
+
+`getProductSnapshot` verifies the reported total against the returned array and
+rejects duplicate IDs, invalid products, mismatched categories, and invalid stock.
+A genuinely empty category returns a snapshot with `total: 0`; the importing
+application decides whether accepting an empty reconciliation is safe.
+Store-filtered snapshots are a different scope and must not replace a complete
+retailer catalog. A product absent from a store result is not evidence that it
+has been discontinued or should be deleted from an archive.
+
+Store codes come from `getStores()`, not store article IDs. A selected-store
+quantity of zero is distinct from missing stock (`null`). `fetchedAt` is a local
+UTC ISO timestamp captured immediately before starting the request: the
+check-start time, not the completion time or an upstream revision. An older
+request keeps its earlier timestamp even if it finishes after a newer request.
+Requests started in the same millisecond may have equal timestamps; importers
+using a high-water timestamp should conservatively reject snapshots whose
+`fetchedAt` is less than or equal to the last accepted timestamp. This timestamp
+does not guarantee upstream freshness or provide a monotonic clock across local
+clock changes or different machines.
+
+Stock `modified` retains the upstream timestamp string without inventing a
+timezone. General `productIsAvailableInStores`, online
+inventory, and `productDateOnMarket` have different meanings: stock alone does not
+override a future release date or guarantee availability when someone arrives.
+
+Both methods accept `{ signal, timeoutMs }`; the default timeout is 30 seconds.
+`getProducts` also accepts an optional second argument with these options and
+`storeCode`. Requests capture their store scope and abort signal before fetching;
+later edits to the options object do not change either.
+
+No request or error writes to a database. The package exposes source
+data, not tasting recommendations, cache policy, or archive-deletion rules.
+
+Run `pnpm test` and `pnpm typecheck` to verify the package. Tests use synthetic
+responses and do not contact Vínbúðin.
+
+### `getProducts(options?, requestOptions?) -> Promise<CategoryData>`
+
+Gets products from www.vinbudin.is and returns an object keyed by selected
+category, with a product array for each category.
+
+- **options** (Object) selects a subset of categories. Omit it to request all categories.
 
 It looks like this:
 
